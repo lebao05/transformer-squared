@@ -23,7 +23,7 @@ Classifier: Topic :: Software Development :: Libraries :: Python Modules
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 Requires-Dist: huggingface_hub
-Requires-Dist: transformers
+Requires-Dist: transformers==4.43.1
 Requires-Dist: pydantic
 Requires-Dist: colorlog
 Provides-Extra: development

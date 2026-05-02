@@ -25,6 +25,8 @@ cd self-adaptive-llms
 ```
 
 ### 2. Install Libraries
+Use Python 3.11. The pinned `vllm==0.5.3.post1` stack does not install cleanly on Python 3.12 because its `vllm-flash-attn==2.5.9.post1` dependency is unavailable there.
+
 ```bash
 conda create -n t2 python=3.11 -y
 conda activate t2

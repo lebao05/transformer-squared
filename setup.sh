@@ -1,5 +1,17 @@
 #!/bin/bash
 # Cài dependencies
+set -e
+
+python - <<'PY'
+import sys
+
+if sys.version_info < (3, 10) or sys.version_info >= (3, 12):
+    raise SystemExit(
+        "This project requires Python 3.10 or 3.11. "
+        "Use Python 3.11 for the pinned vllm==0.5.3.post1 stack."
+    )
+PY
+
 pip install --upgrade pip
 pip install pybind11
 pip install fasttext-wheel
