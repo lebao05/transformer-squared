@@ -11,6 +11,8 @@ class Mbpp2Task(Task):
         self,
     ):
         self.model_to_template = {
+            "Qwen/Qwen2.5-1.5B-Instruct": CODE_PROMPT,
+            "meta-llama/Llama-3.2-1B-Instruct": CODE_PROMPT,
             "meta-llama/Meta-Llama-3-8B-Instruct": CODE_PROMPT,
             "mistralai/Mistral-7B-Instruct-v0.3": CODE_PROMPT,
         }

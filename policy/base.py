@@ -22,7 +22,7 @@ class Policy(nn.Module):
                 self.learnable_params[k] = torch.nn.Parameter(
                     data=(
                         torch.randn(
-                            min(v.shape),
+                            min(v.shape), 
                             device=gpu,
                             dtype=torch.bfloat16,
                         )

@@ -14,6 +14,8 @@ class AI2ArcTask(Task):
         self,
     ):
         self.model_to_template = {
+            "Qwen/Qwen2.5-1.5B-Instruct": None,
+            "meta-llama/Llama-3.2-1B-Instruct": LLAMA3_COT,
             "meta-llama/Meta-Llama-3-8B-Instruct": LLAMA3_COT,
             "mistralai/Mistral-7B-Instruct-v0.3": None,
         }

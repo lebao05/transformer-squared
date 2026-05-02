@@ -7,4 +7,5 @@ outputs
 reference_code
 messy_scripts
 *_decomposed_params.pt
+Miniconda3-latest-Linux-x86_64.sh
 **/__pycache__/

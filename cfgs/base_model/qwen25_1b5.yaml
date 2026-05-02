@@ -1,0 +1,6 @@
+base_model:
+  _target_: base_model.Qwen25Instruct15B
+
+base_model_name: qwen25_1b5
+
+reference_params_results: []

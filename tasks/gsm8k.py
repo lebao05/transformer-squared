@@ -14,7 +14,33 @@ class Gsm8kTask(Task):
     def __init__(
         self,
     ):
+        llama3_template = (
+                "{% set loop_messages = messages %}"
+                "{% for message in loop_messages %}"
+                "{% set content = '<|start_header_id|>' + message['role'] + '<|end_header_id|>"
+                "\n\n'+ message['content'] | trim + '<|eot_id|>' %}"
+                "{% if loop.index0 == 0 %}{% set content = bos_token + content %}"
+                "{% endif %}"
+                "{{ content }}"
+                "{% endfor %}"
+                "{% if add_generation_prompt %}"
+                "{{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}"
+                "{% endif %}"
+            )
+        qwen_template = (
+                "{% for message in messages %}"
+                "{% if loop.first and messages[0]['role'] != 'system' %}"
+                "{{ '<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n' }}"
+                "{% endif %}"
+                "{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}"
+                "{% endfor %}"
+                "{% if add_generation_prompt %}"
+                "{{ '<|im_start|>assistant\n' }}"
+                "{% endif %}"
+            )
         self.model_to_template = {
+            "Qwen/Qwen2.5-1.5B-Instruct": qwen_template,
+            "meta-llama/Llama-3.2-1B-Instruct": llama3_template,
             "meta-llama/Meta-Llama-3-8B-Instruct": (
                 "{% set loop_messages = messages %}"
                 "{% for message in loop_messages %}"
