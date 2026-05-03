@@ -28,6 +28,7 @@ class MathTask(Task):
                 "{% endif %}"
             ),
             "mistralai/Mistral-7B-Instruct-v0.3": None,
+            "Qwen/Qwen2.5-1.5B-Instruct": None,
         }
         self.system_msg = (
             "Solve the question below by reasoning step by step,"
@@ -54,7 +55,14 @@ class MathTask(Task):
         self,
     ) -> Tuple:
         res = [None]
-        dataset = load_dataset("hendrycks/competition_math", "main", split="test")
+        from datasets import concatenate_datasets
+        subjects = [
+            "algebra", "counting_and_probability", "geometry",
+            "intermediate_algebra", "number_theory", "prealgebra", "precalculus"
+        ]
+        dataset = concatenate_datasets([
+            load_dataset("EleutherAI/hendrycks_math", s, split="test") for s in subjects
+        ])
 
         samples = []
         for sample in dataset:

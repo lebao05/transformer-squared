@@ -106,6 +106,7 @@ class ClsTask(Task):
                 "{% endif %}"
             ),
             "mistralai/Mistral-7B-Instruct-v0.3": None,
+            "Qwen/Qwen2.5-1.5B-Instruct": None,
         }
         self.system_msg = """
     # Analyze the given question and classify it into one of four categories: 'code', 'math', 'reasoning' or 'other'. Follow these guidelines:

@@ -113,7 +113,7 @@ def main(cfg):
         test_eval = test_evals[0]
 
     train_data, train_ix, valid_ix = task_loader.get_train_data()
-    gpu = torch.device("cuda:1")
+    gpu = torch.device("cuda:0")
     np_random = np.random.RandomState(seed)
 
     # cpu + float32 for initial SVD decomposition
@@ -124,7 +124,7 @@ def main(cfg):
     else:
         # Load model and tokenizer.
         model = AutoModelForCausalLM.from_pretrained(
-            model_id, device_map="cuda:1", torch_dtype=torch.bfloat16
+            model_id, device_map="cuda:0", torch_dtype=torch.bfloat16
         )
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     base_params = model.state_dict()
@@ -152,7 +152,7 @@ def main(cfg):
     else:
         print("Decomposed params found. Loading...")
         assert not extract_svd
-        decomposed_params = torch.load(decomposed_param_file)
+        decomposed_params = torch.load(decomposed_param_file, map_location="cpu")
     for k, v in decomposed_params.items():
         decomposed_params[k] = v.to(torch.bfloat16).to(gpu)
 
@@ -186,7 +186,7 @@ def main(cfg):
             new_params = merged_model.state_dict()
         # load svd expert
         elif "learnable_params" in load_ckpt:
-            learnable_params = torch.load(load_ckpt)
+            learnable_params = torch.load(load_ckpt, map_location="cpu")
             for k, v in learnable_params.items():
                 learnable_params[k] = v.to(gpu)
             assert test_only
@@ -194,7 +194,7 @@ def main(cfg):
                 policy, model, base_params, decomposed_params, learnable_params
             )
         else:
-            state_dict = torch.load(load_ckpt, weights_only=True)
+            state_dict = torch.load(load_ckpt, map_location="cpu", weights_only=True)
             policy.load_state_dict(state_dict=state_dict)
             learnable_params = policy.get_learnable_params()
             new_params = forward(
