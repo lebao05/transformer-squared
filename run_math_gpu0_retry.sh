@@ -12,14 +12,6 @@ CLS_CKPT="results/Cls/1_mm1/qwen25_1b5/RL-lr0.002-mGN0.001-klC0-rrN0CNone-st/202
 EXPERTS="experts_path_dict.math=$MATH_CKPT experts_path_dict.code=$CODE_CKPT experts_path_dict.reasoning=$REASONING_CKPT experts_path_dict.other=$CLS_CKPT"
 mkdir -p run_logs
 
-echo ">>> [9/12] Math - Base"
-python svd_reinforce_hydra.py $BASE_EVAL task@_global_=few_shot_math prompt_based_eval=false \
-    2>&1 | tee run_logs/math_base.log
-
-echo ">>> [10/12] Math - Prompt-based"
-python svd_reinforce_hydra.py $BASE_EVAL task@_global_=few_shot_math prompt_based_eval=true $EXPERTS \
-    2>&1 | tee run_logs/math_prompt.log
-
 echo ">>> [11/12] Math - Cls-expert"
 python svd_reinforce_hydra.py $BASE_EVAL task@_global_=few_shot_math prompt_based_eval=false load_ckpt=$CLS_CKPT $EXPERTS \
     2>&1 | tee run_logs/math_cls.log
