@@ -99,7 +99,7 @@ class MathTask(Task):
         model = vllm.LLM(
             model_id,
             max_model_len=2048,
-            gpu_memory_utilization=0.8,
+            gpu_memory_utilization=0.6,
             enforce_eager=True,
             dtype="bfloat16",
             download_dir=get_download_dir(),
