@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH="/venv/t2/bin:$PATH"
 export TOKENIZERS_PARALLELISM=false
 export CUDA_VISIBLE_DEVICES=1
 cd /workspace/transformer-squared
