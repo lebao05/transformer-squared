@@ -140,10 +140,11 @@ def main(cfg):
         for k, v in base_params.items():
             if "mlp" in k and v.dim() >= 2:
                 print(k)
-                U, S, Vh = torch.linalg.svd(v.float(), full_matrices=False)
-                decomposed_params[f"{k}.U"] = U
-                decomposed_params[f"{k}.S"] = S
-                decomposed_params[f"{k}.V"] = Vh.T
+                v_gpu = v.float().cuda()
+                U, S, Vh = torch.linalg.svd(v_gpu, full_matrices=False)
+                decomposed_params[f"{k}.U"] = U.cpu()
+                decomposed_params[f"{k}.S"] = S.cpu()
+                decomposed_params[f"{k}.V"] = Vh.T.cpu()
         torch.save(decomposed_params, decomposed_param_file)
         print("successfully decomposed model - returning")
         return
