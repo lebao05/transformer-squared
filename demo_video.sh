@@ -33,7 +33,7 @@ echo ""
 
 python svd_reinforce_hydra.py \
     base_model@_global_=qwen25_1b5 \
-    mode@_global_=train \
+    mode@_global_=training \
     wandb_log=false \
     task@_global_=few_shot_arc_challenge \
     num_iters=2 \
