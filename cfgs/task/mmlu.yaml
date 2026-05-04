@@ -1,0 +1,4 @@
+task_loader:
+  _target_: tasks.MMLUTask
+
+task_name: mmlu

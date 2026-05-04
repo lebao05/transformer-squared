@@ -1,0 +1,4 @@
+task_loader:
+  _target_: tasks.HellaSwagTask
+
+task_name: hellaswag
